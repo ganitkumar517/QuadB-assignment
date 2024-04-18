@@ -3,7 +3,6 @@ import TaskInput from "./TaskInput";
 import TaskList from "./TaskList";
 
 const App = () => {
-  // Initialize tasks from local storage
   const [tasks, setTasks] = useState(() => {
     const storedTasks = localStorage.getItem("tasks");
     return storedTasks ? JSON.parse(storedTasks) : [];
@@ -11,7 +10,6 @@ const App = () => {
 
   const [taskToEdit, setTaskToEdit] = useState(null);
 
-  // Save tasks to local storage whenever tasks change
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
@@ -25,12 +23,10 @@ const App = () => {
   };
 
   const handleEditTask = (taskIndex) => {
-    // Set the task to be edited
     setTaskToEdit({ index: taskIndex, text: tasks[taskIndex].text });
   };
 
   const handleSaveEdit = (editedTaskText) => {
-    // Update the task in the tasks array
     const updatedTasks = tasks.map((task, index) => {
       if (index === taskToEdit.index) {
         return { ...task, text: editedTaskText };
@@ -38,11 +34,10 @@ const App = () => {
       return task;
     });
     setTasks(updatedTasks);
-    setTaskToEdit(null); // Reset the task to edit
+    setTaskToEdit(null);
   };
 
   const handleToggleTaskCompletion = (taskIndex) => {
-    // Toggle the completed status of the task
     const updatedTasks = tasks.map((task, index) => {
       if (index === taskIndex) {
         return { ...task, completed: !task.completed };
